@@ -40,6 +40,11 @@ def index():
 app.register_blueprint(sample_routes, url_prefix=url_prefix+'/sample')
 app.register_blueprint(processor_routes, url_prefix=url_prefix+'/processor')
 
+# ---- Start LiveKit service on import ----
+from app.controller.processor.services import Service
+Service.get_instance()   # auto-start happens inside constructor
+
+
 @app.errorhandler(404)
 def resource_not_found(error):
     return resp_page_not_found('Page not found', str(error))
